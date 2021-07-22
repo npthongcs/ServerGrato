@@ -829,7 +829,7 @@ END $$
 DELIMITER ;
 
 -- call add_question_to_quiz_proc("CO3005", 202, "Quiz4", 1, "Tu 'Da' trong tieng Anh la gi?");
-
+-- call add_question_to_quiz_proc("CO3005", 202, "Quiz4", 2, "");
 
 DROP PROCEDURE IF EXISTS add_answer_to_question_proc;
 DELIMITER $$
@@ -859,7 +859,7 @@ DELIMITER ;
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'B', true, "Ice");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'C', true, "Kick");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'D', true, "Rock");
-
+-- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 2, 'A', true, "Default answer");
 
 DROP PROCEDURE IF EXISTS get_all_answer_of_a_question_proc;
 DELIMITER $$

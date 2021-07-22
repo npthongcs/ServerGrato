@@ -82,8 +82,53 @@ router.delete('/delete_quiz', (req, res)=>{
 });
 
 // Long do
+router.post('/add_question_to_quiz_proc', (req, res)=>{
+    if(!req.privilege.addQuiz) return res.sendStatus(401);
+    console.log("add_question_to_quiz_proc")
+
+    var sub_id = req.body.sub_id;
+    var semester_id = req.body.semester_id;
+    var quiz_name = req.body.quiz_name;
+    var question_id = req.body.question_id;
+    var content = req.body.content;
+
+    connection.query(
+        'call add_question_to_quiz_proc(?,?,?,?,?)',
+        [sub_id, semester_id, quiz_name, question_id, content],
+        (err, results, fields)=>{
+            if(err) return res.sendStatus(500);
+            res.sendStatus(200);
+        }
+    )
+});
+
+// Long do
+router.post('/add_answer_to_question_proc', (req, res)=>{
+    if(!req.privilege.addQuiz) return res.sendStatus(401);
+    console.log("add_answer_to_question_proc")
+
+    var sub_id = req.body.sub_id;
+    var semester_id = req.body.semester_id;
+    var quiz_name = req.body.quiz_name;
+    var question_id = req.body.question_id;
+    var answer_id = req.body.answer_id;
+    var right_answer = req.body.right_answer;
+    var content = req.body.content;
+
+    connection.query(
+        'call add_answer_to_question_proc(?,?,?,?,?,?,?)',
+        [sub_id, semester_id, quiz_name, question_id, answer_id, right_answer, content],
+        (err, results, fields)=>{
+            if(err) return res.sendStatus(500);
+            res.sendStatus(200);
+        }
+    )
+});
+
+// Long do
 router.get('/get_all_questions_and_answers_of_quiz', (req, res)=>{
     if(!req.privilege.getAllQuestionAndAnswers) return res.sendStatus(401);
+    console.log('get_all_questions_and_answers_of_quiz');
 
     var sub_id = req.query.sub_id;
     var semester_id = req.query.semester_id;
@@ -117,6 +162,62 @@ router.post('/addquiztoclass', (req, res)=>{
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
             res.send(results[0]);
+        }
+    )
+});
+
+
+
+//Long do
+router.get('/getQuiz', (req, res)=>{
+    if(!req.privilege.listQuiz) return res.sendStatus(401);
+
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var quiz_name = req.query.quiz_name;
+
+
+    console.log("in quiz: ", req.headers)
+    console.log("in quiz--: ", req.query)
+    connection.query(
+        'call get_a_quiz_proc(?,?,?)',
+        [sub_id, semester_id, quiz_name],
+        (err, results, fields)=>{
+            if(err) return res.status(500).send(err);
+            res.send(results[0][0]);
+        }
+    )
+});
+
+
+//Long do
+router.put('/modifyQuiz', (req, res)=>{
+    if(!req.privilege.listQuiz) return res.sendStatus(401);
+    console.log("modify")
+
+    var sub_id = req.body.sub_id;
+    var semester_id = req.body.semester_id;
+    var quiz_name = req.body.quiz_name;
+    var max_time = req.body.max_time;
+    var no_question = req.body.no_question;
+    var deadline = req.body.deadline;
+
+
+    console.log("in quiz: ", req.headers)
+    console.log("in quiz--: ", req.body)
+    console.log("body: ", quiz_name, no_question);
+    connection.query(
+        'call modify_quiz_proc(?,?,?,?,?,?)',
+        [sub_id, semester_id, quiz_name, max_time, no_question, deadline],
+        (err, results, fields)=>{
+            console.log(results);
+            if(err) return res.status(500).send(err);
+            res.send({
+                'quiz_name': quiz_name,
+                'max_time': max_time,
+                'no_question': no_question,
+                'deadline': deadline,
+            });
         }
     )
 });

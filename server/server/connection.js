@@ -3,8 +3,8 @@ var mysql = require('mysql');
 var con = mysql.createConnection({
   database: 'grato',
   host: "localhost",
-  user: "root",
-  password: "12345678"
+  user: "grato_user",
+  password: "password"
 });
 
 con.connect(function(err) {
