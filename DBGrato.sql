@@ -258,7 +258,7 @@ create table student_in_group
     class_id varchar(55),
     gname varchar(255),
     user_id varchar(55),
-    primary key (user_id),
+    primary key (user_id, sub_id, semester_id, class_id),
 	foreign key (sub_id, semester_id, class_id, gname)
 		references `group`(sub_id, semester_id, class_id, gname)
         on delete cascade
@@ -407,7 +407,6 @@ Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005'
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','1111111');
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','2222222');
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','5555555');
-Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','789');
 
 Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','1111111');
 Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','2222222');
@@ -424,6 +423,7 @@ Insert into student_do_exam_code (sub_id,semester_id,exam_name,exam_code_id,user
 
 Insert into student_do_quiz (sub_id,semester_id,quiz_name,user_id,student_answer,time,score) values ('CO3005',202,'Quiz1: Lexical','2222222','AA',20,10.0);
 Insert into student_do_quiz (sub_id,semester_id,quiz_name,user_id,student_answer,time,score) values ('CO3005',202,'Quiz1: Lexical','3333333','BA',10,5.0);
+
 
 drop table if exists time_attendance;
 create table time_attendance
@@ -461,12 +461,13 @@ END; $$
 
 DROP PROCEDURE IF EXISTS findGroup $$
 CREATE PROCEDURE findGroup(
-	user_id varchar(55)
+	user_id varchar(55),sub_id varchar(55), semester_id int, class_id varchar(55)
 )
 BEGIN
 	SELECT gname
     From student_in_group s
-    where s.user_id = user_id;
+    where s.user_id = user_id and s.sub_id = sub_id and s.semester_id = semester_id 
+    and s.class_id = class_id;
 END; $$
 
 DROP PROCEDURE IF EXISTS inforclass $$
@@ -598,13 +599,21 @@ END; $$
 DROP PROCEDURE IF EXISTS creategroup $$
 CREATE PROCEDURE creategroup(
 	sub_id varchar(55), semester_id int, class_id varchar(55), gname varchar(55), 
-    no_student int, max_student int, user_id varchar(55)
+    no_student int, max_student int
     )
 BEGIN
-	INSERT INTO creator_group
-    VALUES (sub_id, semester_id , class_id , gname,user_id);
     INSERT INTO `group`
     VALUES (sub_id, semester_id , class_id , gname,no_student , max_student);
+END; $$
+
+DROP PROCEDURE IF EXISTS deleteGroup $$
+CREATE PROCEDURE deleteGroup(
+	sub_id varchar(55), semester_id int, class_id varchar(55), gname varchar(55)
+    )
+BEGIN
+    Delete from `group` s
+    where s.sub_id=sub_id AND s.semester_id=semester_id 
+    AND s.class_id=class_id AND s.gname =gname;
 END; $$
 
 -- ho thien long
@@ -829,7 +838,7 @@ END $$
 DELIMITER ;
 
 -- call add_question_to_quiz_proc("CO3005", 202, "Quiz4", 1, "Tu 'Da' trong tieng Anh la gi?");
--- call add_question_to_quiz_proc("CO3005", 202, "Quiz4", 2, "");
+
 
 DROP PROCEDURE IF EXISTS add_answer_to_question_proc;
 DELIMITER $$
@@ -859,7 +868,7 @@ DELIMITER ;
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'B', true, "Ice");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'C', true, "Kick");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'D', true, "Rock");
--- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 2, 'A', true, "Default answer");
+
 
 DROP PROCEDURE IF EXISTS get_all_answer_of_a_question_proc;
 DELIMITER $$
