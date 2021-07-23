@@ -202,7 +202,7 @@ create table user_of_class
     semester_id int,
 	class_id varchar(55),
     user_id varchar(55),
-    primary key (user_id,class_id,sub_id,semester_id),
+    primary key (user_id,sub_id,semester_id),
 	foreign key (sub_id, semester_id, class_id)
 		references class(sub_id, semester_id, class_id)
         on delete cascade
@@ -213,6 +213,7 @@ create table user_of_class
         on update cascade
 );
 
+
 drop table if exists teacher_of_class;
 create table teacher_of_class
 (
@@ -220,11 +221,7 @@ create table teacher_of_class
     semester_id int,
 	class_id varchar(55),
     user_id varchar(55),
-    primary key (user_id),
-	foreign key (sub_id, semester_id, class_id)
-		references class(sub_id, semester_id, class_id)
-        on delete cascade
-        on update cascade,
+    primary key (user_id, sub_id, semester_id, class_id),
 	foreign key (user_id)
 		references user(id)
         on delete cascade
@@ -406,7 +403,8 @@ Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005'
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','3333333');
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','1111111');
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','2222222');
-Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','5555555');
+-- Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','5555555');
+Insert into teacher_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','5555555');
 
 Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','1111111');
 Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','2222222');
@@ -476,9 +474,9 @@ CREATE PROCEDURE inforClass(
 )
 BEGIN
 	SELECT image, sub_id, class_id, room, start_time, end_time, user.name
-    FROM class, user_of_class, user, subject
+    FROM class, teacher_of_class t, user, subject
     WHERE class.sub_id = sub_id AND class.semester_id = semester_id AND class.class_id = class_id 
-    AND user_of_class.user_id = user.id AND job_type = "GV" AND subject.id = sub_id;
+    AND t.user_id = user.id AND subject.id = sub_id;
 END; $$
 
 DROP PROCEDURE IF EXISTS joinsubject $$
@@ -507,9 +505,9 @@ CREATE PROCEDURE listClass_GV(
 	sub_id varchar(55), semester_id int, user_id varchar(55)
 )
 BEGIN
-	select *
-    from user_of_class ul, user u
-    where ul.user_id = u.id AND ul.sub_id = sub_id AND ul.semester_id = semester_id AND ul.user_id = user_id;
+	select class_id
+    from teacher_of_class t
+    where t.user_id = user_id AND t.sub_id = sub_id AND t.semester_id = semester_id;
 END; $$
 
 
@@ -518,12 +516,14 @@ CREATE PROCEDURE countstudent(
 	class_id varchar(55), sub_id varchar(55), semester varchar(55)
 )
 BEGIN
-	select ul.class_id, count(ul.user_id)
+	select ul.class_id, count(ul.user_id) count
     from user_of_class ul
     where ul.sub_id = sub_id AND ul.semester_id = semester
-    group by class_id
+    group by ul.class_id
     having ul.class_id = class_id ;
 END; $$
+
+call countstudent("L01","CO3005",202);
 
 
 DROP PROCEDURE IF EXISTS liststudentinclass $$
