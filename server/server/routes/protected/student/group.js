@@ -61,12 +61,11 @@ router.post('/creategroup',(req, res) => {
     var class_id = req.body.class_id;
     var group_name = req.body.group_name;
     var max_student = req.body.max_student;
-    var user_id = req.body.user_id
 
     console.log("create group");
 
-    connection.query(`CALL creategroup(?,?,?,?,?,?,?)`,
-        [sub_id,semester_id,class_id,group_name,0,max_student,user_id],
+    connection.query(`CALL creategroup(?,?,?,?,?,?)`,
+        [sub_id,semester_id,class_id,group_name,0,max_student],
         (err, results, fields) => {
         if(err) return res.status(500).send(err);
         res.send(results);
@@ -95,9 +94,12 @@ router.get('/findgroup',(req, res) => {
     if(!req.privilege.viewmem) return res.sendStatus(401);
     
     var user_id = req.query.user_id;
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var class_id = req.query.class_id;
 
-    connection.query(`CALL findGroup(?)`,
-        [user_id],
+    connection.query(`CALL findGroup(?,?,?,?)`,
+        [user_id,sub_id,semester_id,class_id],
         (err, results, fields) => {
         if(err) return res.status(500).send(err);
         if (results[0][0] == null) res.send("-1");
