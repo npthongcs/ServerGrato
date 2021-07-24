@@ -14,7 +14,8 @@ router.get('/listclass', (req, res)=>{
         [sub_id, semester_id, user_id],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
-            if (results[0]==null) res.send("-1")
+            console.log(results[0]);
+            if (results[0][0]==null) res.send("-1")
             else res.send([results[0][0]['class_id']]);
         }
     )

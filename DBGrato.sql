@@ -344,6 +344,8 @@ Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values
 Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3003', 202,'L02','212H1','9:00 AM','11:00 AM');
 Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('SP1007', 202,'L01','112H1','9:00 AM','11:00 AM');
 Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3005', 202,'L01','210H1','9:00 AM','11:00 AM');
+Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3005', 202,'L02','211H1','1:00 PM','3:00 PM');
+Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3005', 202,'L03','212H1','7:00 AM','9:00 AM');
 
 -- Insert into `group` (sub_id, semester_id,class_id,gname,no_student,max_student,creator) values ('CO3005', 202,'L01','Alias',4,5);
 -- Insert into `group` (sub_id, semester_id,class_id,gname,no_student,max_student,creator) values ('CO3005', 202,'L01','Efien',4,5);
@@ -499,6 +501,7 @@ BEGIN
     INSERT INTO user_of_class
     VALUES(sub_id,semester_id,class_id,user_id);
 END; $$
+-- call createClass_GV('CO3005', 202, 'L01', 'H2-202', '7h', '9h', 'buiducvu');
 
 DROP PROCEDURE IF EXISTS listClass_GV $$
 CREATE PROCEDURE listClass_GV(
@@ -509,6 +512,7 @@ BEGIN
     from teacher_of_class t
     where t.user_id = user_id AND t.sub_id = sub_id AND t.semester_id = semester_id;
 END; $$
+-- call listClass_GV('CO3005', 202, 'buiducvu');
 
 
 DROP PROCEDURE IF EXISTS countstudent $$
