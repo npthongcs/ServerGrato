@@ -125,6 +125,56 @@ router.post('/add_answer_to_question_proc', (req, res)=>{
     )
 });
 
+
+// Long do
+router.post('/modify_question_of_quiz', (req, res)=>{
+    if(!req.privilege.addQuiz) return res.sendStatus(401);
+    console.log("modify_question_of_quiz")
+
+    var sub_id = req.body.sub_id;
+    var semester_id = req.body.semester_id;
+    var quiz_name = req.body.quiz_name;
+    var question_id = req.body.question_id;
+    var content = req.body.content;
+
+    console.log(req.body);
+
+    connection.query(
+        'call modify_question_of_quiz_proc(?,?,?,?,?)',
+        [sub_id, semester_id, quiz_name, question_id, content],
+        (err, results, fields)=>{
+            if(err) return res.sendStatus(500);
+            res.sendStatus(200);
+        }
+    )
+});
+
+
+// Long do
+router.post('/modify_answer_of_question', (req, res)=>{
+    if(!req.privilege.addQuiz) return res.sendStatus(401);
+    console.log("modify_answer_of_question")
+
+    var sub_id = req.body.sub_id;
+    var semester_id = req.body.semester_id;
+    var quiz_name = req.body.quiz_name;
+    var question_id = req.body.question_id;
+    var answer_id = req.body.answer_id;
+    var right_answer = req.body.right_answer;
+    var content = req.body.content;
+
+    console.log(req.body);
+
+    connection.query(
+        'call modify_answer_of_question_proc(?,?,?,?,?,?,?)',
+        [sub_id, semester_id, quiz_name, question_id, answer_id, right_answer, content],
+        (err, results, fields)=>{
+            if(err) return res.sendStatus(500);
+            res.sendStatus(200);
+        }
+    )
+});
+
 // Long do
 router.get('/get_all_questions_and_answers_of_quiz', (req, res)=>{
     if(!req.privilege.getAllQuestionAndAnswers) return res.sendStatus(401);

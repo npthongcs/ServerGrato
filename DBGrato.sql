@@ -861,6 +861,54 @@ DELIMITER ;
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'D', true, "Rock");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 2, 'A', true, "Default answer");
 
+
+
+DROP PROCEDURE IF EXISTS modify_question_of_quiz_proc;
+DELIMITER $$
+CREATE PROCEDURE modify_question_of_quiz_proc
+(
+	sub_id varchar(55), semester_id int, quiz_name varchar(255), question_id int, content text
+)
+BEGIN
+	update question q
+    set q.content = content
+    where q.sub_id = sub_id
+		and q.semester_id = semester_id
+        and q.quiz_name = quiz_name
+        and q.question_id = question_id;
+    
+    select LAST_INSERT_ID() as last_id;
+END $$
+DELIMITER ;
+
+call modify_question_of_quiz_proc("CO3005", 202, "Quy", 2, "Modify question");
+
+
+
+DROP PROCEDURE IF EXISTS modify_answer_of_question_proc;
+DELIMITER $$
+CREATE PROCEDURE modify_answer_of_question_proc
+(
+	sub_id varchar(55), semester_id int, quiz_name varchar(255), question_id int, answer_id varchar(1), right_answer tinyint(1), content text
+)
+BEGIN
+	update answer a
+    set a.content = content,
+		a.right_answer = right_answer
+    where a.sub_id = sub_id
+		and a.semester_id = semester_id
+        and a.quiz_name = quiz_name
+        and a.question_id = question_id
+        and a.answer_id = answer_id;
+    
+    select LAST_INSERT_ID() as last_id;
+END $$
+DELIMITER ;
+
+call modify_answer_of_question_proc("CO3005", 202, "Quy", 2, "B", false, "Modify answer");
+
+
+
 DROP PROCEDURE IF EXISTS get_all_answer_of_a_question_proc;
 DELIMITER $$
 CREATE PROCEDURE get_all_answer_of_a_question_proc
