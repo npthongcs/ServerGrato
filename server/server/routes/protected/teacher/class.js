@@ -14,8 +14,7 @@ router.get('/listclass', (req, res)=>{
         [sub_id, semester_id, user_id],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
-            if (results[0]==null) res.send("-1")
-            else res.send([results[0][0]['class_id']]);
+            res.send(results[0])
         }
     )
 });
@@ -31,7 +30,7 @@ router.get('/countstudent', (req, res)=>{
         [class_id, sub_id, semester_id],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
-            res.send(results[0]);
+            res.send(results[0][0]);
         }
     )
 });
@@ -74,5 +73,25 @@ router.get('/liststudent',(req, res) => {
 });
 
 
+router.post('/timeAttendance', (req, res)=>{
+    if(!req.privilege.createclass) return res.sendStatus(401);
+    
+    var semester_id = req.body.semester_id;
+    var sub_id = req.body.sub_id;
+    var class_id = req.body.class_id;
+    var start_time = req.body.start_time;
+    var end_time = req.body.end_time;
+    var lati = req.body.lati;
+    var longti = req.body.longti;
+
+    connection.query(
+        'call setTimeAttendance(?,?,?,?,?,?,?)',
+        [semester_id, sub_id, class_id, start_time, end_time, lati, longti],
+        (err, results, fields)=>{
+            if(err) return res.status(500).send(err);
+            res.send(results[0]);
+        }
+    )
+});
 
 module.exports = router;
