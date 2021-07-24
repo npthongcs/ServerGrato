@@ -221,7 +221,7 @@ create table teacher_of_class
     semester_id int,
 	class_id varchar(55),
     user_id varchar(55),
-    primary key (user_id, sub_id, semester_id, class_id),
+    primary key (sub_id, semester_id, class_id),
 	foreign key (user_id)
 		references user(id)
         on delete cascade
@@ -403,8 +403,7 @@ Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005'
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','3333333');
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','1111111');
 Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','2222222');
--- Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','5555555');
-Insert into teacher_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','5555555');
+Insert into teacher_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','113');
 
 Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','1111111');
 Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','2222222');
@@ -431,6 +430,8 @@ create table time_attendance
     class_id varchar(55),
     start_time datetime,
     end_time datetime,
+    lati double,
+    longti double,
     primary key (start_time, end_time,sub_id, semester_id, class_id),
 	foreign key (sub_id, semester_id, class_id)
 		references class(sub_id, semester_id, class_id)
@@ -523,7 +524,7 @@ BEGIN
     having ul.class_id = class_id ;
 END; $$
 
-call countstudent("L01","CO3005",202);
+-- call countstudent("L01","CO3005",202);
 
 
 DROP PROCEDURE IF EXISTS liststudentinclass $$
@@ -533,7 +534,7 @@ CREATE PROCEDURE liststudentinclass(
 BEGIN
 	select u.id, u.name
     from user_of_class ul, user u
-    where s.sub_id=sub_id AND s.semester_id=semester_id AND s.class_id=class_id AND ul.user_id=u.id;
+    where ul.sub_id=sub_id AND ul.semester_id=semester_id AND ul.class_id=class_id AND ul.user_id=u.id;
 END;$$
 
 
