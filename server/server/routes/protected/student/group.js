@@ -72,6 +72,24 @@ router.post('/creategroup',(req, res) => {
     })
 });
 
+router.delete('/deletegroup',(req, res) => {
+    if(!req.privilege.creategroup) return res.sendStatus(401);
+    
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var class_id = req.query.class_id;
+    var group_name = req.query.group_name;
+    
+    console.log("delete group");
+
+    connection.query(`CALL deleteGroup(?,?,?,?)`,
+        [sub_id,semester_id,class_id,group_name],
+        (err, results, fields) => {
+        if(err) return res.status(500).send(err);
+        res.send(results);
+    })
+});
+
 router.get('/viewmem',(req, res) => {
     if(!req.privilege.viewmem) return res.sendStatus(401);
 

@@ -33,6 +33,7 @@ function getPrivilege(user) {
         attend: false,
         addattend: false,
         showQuiz: false,
+        deletegroup: false
     };
 
     if(user.job_type == 'GV')
@@ -80,6 +81,7 @@ function getPrivilege(user) {
         privilege.attend = true;
         privilege.addattend = true;
         privilege.showQuiz = true;
+        privilege.deletegroup = true;
     }
 
 
