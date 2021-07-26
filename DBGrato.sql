@@ -309,118 +309,6 @@ create table student_do_quiz
         on update cascade
 );
 
-Insert into subject (id, image, name) values ('CH1003', 'bk.png', 'Hoa dai cuong');
-Insert into subject (id, image, name) values ('MT1003', 'bk.png', 'Giao duc quoc phong');
-Insert into subject (id, image, name) values ('PH1003', 'bk.png', 'Vat ly 1');
-Insert into subject (id, image, name) values ('CO1005', 'bk.png', 'Nhap mon dien toan');
-Insert into subject (id, image, name) values ('CO1007', 'bk.png', 'Cau truc roi rac');
-Insert into subject (id, image, name) values ('MT1005', 'bk.png', 'Giai tich 2');
-Insert into subject (id, image, name) values ('MT1007', 'bk.png', 'Dai so tuyen tinh');
-Insert into subject (id, image, name) values ('CO1009', 'bk.png', 'Phuong phap tinh');
-Insert into subject (id, image, name) values ('CO2007', 'bk.png', 'Kien truc may tinh');
-Insert into subject (id, image, name) values ('CO2005', 'bk.png', 'Lap trinh huong doi tuong');
-Insert into subject (id, image, name) values ('CO2003', 'bk.png', 'Cau truc du lieu va giai thuat');
-Insert into subject (id, image, name) values ('PH1005', 'bk.png', 'Vat ly 2');
-Insert into subject (id, image, name) values ('MT2001', 'bk.png', 'Xac suat va thong ke');
-Insert into subject (id, image, name) values ('CO2011', 'bk.png', 'Mo hinh hoa toan hoc');
-Insert into subject (id, image, name) values ('CO3001', 'bk.png', 'Cong nghe phan mem');
-Insert into subject (id, image, name) values ('CO2017', 'bk.png', 'He dieu hanh');
-Insert into subject (id, image, name) values ('CO2001', 'bk.png', 'Ky nang chuyen nghiep cho ky su');
-Insert into subject (id, image, name) values ('SP1007', 'bk.png', 'Phap luat');
-Insert into subject (id, image, name) values ('CO2013', 'bk.png', 'He co so du lieu');
-Insert into subject (id, image, name) values ('CO3003', 'bk.png', 'Mang may tinh');
-Insert into subject (id, image, name) values ('CO3005', 'bk.png', 'Nguyen ly ngon ngu lap trinh');
-
-Insert into subject_in_semester (sub_id, semester_id) values ('CO3005', 202);
-Insert into subject_in_semester (sub_id, semester_id) values ('SP1007', 202);
-Insert into subject_in_semester (sub_id, semester_id) values ('CO3003', 202);
-Insert into subject_in_semester (sub_id, semester_id) values ('CO2013', 202);
-
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO2013', 202,'L01','221H1','7:00 AM','9:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO2013', 202,'L02','221H1','9:00 AM','11:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO2013', 202,'L03','410H1','7:00 AM','9:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO2013', 202,'L04','410H1','9:00 AM','11:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3003', 202,'L01','212H1','7:00 AM','9:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3003', 202,'L02','212H1','9:00 AM','11:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('SP1007', 202,'L01','112H1','9:00 AM','11:00 AM');
-Insert into class (sub_id, semester_id,class_id,room,start_time,end_time) values ('CO3005', 202,'L01','210H1','9:00 AM','11:00 AM');
-
--- Insert into `group` (sub_id, semester_id,class_id,gname,no_student,max_student,creator) values ('CO3005', 202,'L01','Alias',4,5);
--- Insert into `group` (sub_id, semester_id,class_id,gname,no_student,max_student,creator) values ('CO3005', 202,'L01','Efien',4,5);
--- Insert into `group` (sub_id, semester_id,class_id,gname,no_student,max_student,creator) values ('CO3005', 202,'L01','Catus',4,5);
--- Insert into `group` (sub_id, semester_id,class_id,gname,no_student,max_student,creator) values ('CO3005', 202,'L01','Lancelot',3,5);
-
-Insert into exam (sub_id, semester_id,exam_name,no_question) values ('CO3005', 202,'KTGK',30);
-Insert into exam (sub_id, semester_id,exam_name,no_question) values ('CO3005', 202,'KTCK',30);
-Insert into exam (sub_id, semester_id,exam_name,no_question) values ('CO3005', 202,'BTN',10);
-Insert into exam (sub_id, semester_id,exam_name,no_question) values ('CO3005', 202,'BTL',10);
-
-Insert into exam_code (sub_id, semester_id,exam_name,exam_code_id,key_answer) values ('CO3005', 202,'KTGK','001','BCDDDBBCBCCDADBACDADACBDCDBCDA');
-Insert into exam_code (sub_id, semester_id,exam_name,exam_code_id,key_answer) values ('CO3005', 202,'KTCK','002','ABBBABCDCDBBADBCBACDBAACDAADCC');
-Insert into exam_code (sub_id, semester_id,exam_name,exam_code_id,key_answer) values ('CO3005', 202,'BTN','003','CDAAAACDAA');
-Insert into exam_code (sub_id, semester_id,exam_name,exam_code_id,key_answer) values ('CO3005', 202,'BTL','004','BBDDDBCDBC');
-
-Insert into quiz (sub_id, semester_id,quiz_name,max_time,no_question,deadline) values ('CO3005', 202,'Quiz1: Lexical',20,2,'2021-04-30');
-Insert into quiz (sub_id, semester_id,quiz_name,max_time,no_question,deadline) values ('CO3005', 202,'Quiz2: Syntax',20,1,'2021-04-30');
-Insert into quiz (sub_id, semester_id,quiz_name,max_time,no_question,deadline) values ('CO3005', 202,'Quiz3: OOP',20,2,'2021-04-30');
-
-Insert into quiz_of_class (sub_id, semester_id,quiz_name,class_id) values ('CO3005', 202,'Quiz1: Lexical','L01');
-Insert into quiz_of_class (sub_id, semester_id,quiz_name,class_id) values ('CO3005', 202,'Quiz2: Syntax','L01');
-Insert into quiz_of_class (sub_id, semester_id,quiz_name,class_id) values ('CO3005', 202,'Quiz3: OOP','L01');
-
-Insert into question (sub_id, semester_id,quiz_name,question_id,content) values ('CO3005', 202,'Quiz1: Lexical',1,'1+1 = ?');
-Insert into question (sub_id, semester_id,quiz_name,question_id,content) values ('CO3005', 202,'Quiz1: Lexical',2,'if(a):a?b');
-Insert into question (sub_id, semester_id,quiz_name,question_id,content) values ('CO3005', 202,'Quiz2: Syntax',1,'2+2 = ?');
-Insert into question (sub_id, semester_id,quiz_name,question_id,content) values ('CO3005', 202,'Quiz3: OOP',1,'3+3 = ?');
-Insert into question (sub_id, semester_id,quiz_name,question_id,content) values ('CO3005', 202,'Quiz3: OOP',2,'B a = new A b');
-
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz1: Lexical',1,'A',true,'2');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz1: Lexical',1,'B',false,'3');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz1: Lexical',1,'C',false,'4');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz1: Lexical',2,'A',true,'true');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz1: Lexical',2,'B',false,'false');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz2: Syntax',1,'A',true,'4');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz2: Syntax',1,'B',false,'5');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz2: Syntax',1,'C',false,'6');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz3: OOP',1,'A',true,'6');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz3: OOP',1,'B',false,'7');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz3: OOP',1,'C',false,'8');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz3: OOP',2,'A',true,'true');
-Insert into answer (sub_id, semester_id,quiz_name,question_id,answer_id,right_answer,content) values ('CO3005', 202,'Quiz3: OOP',2,'B',false,'false');
-
-Insert into user (id,name,job_type,hashed_pass) values ('1111111', 'Ho Thien Long','SV','hashed_pass');
-Insert into user (id,name,job_type,hashed_pass) values ('2222222', 'Nguyen Phi Thong','SV','hashed_pass');
-Insert into user (id,name,job_type,hashed_pass) values ('3333333', 'Phan Van Truong','SV','hashed_pass');
-Insert into user (id,name,job_type,hashed_pass) values ('4444444', 'Nguyen Quang Tung','SV','hashed_pass');
-Insert into user (id,name,job_type,hashed_pass) values ('5555555', 'Luu Quang Huan','GV','hashed_pass');
-
-Insert into user_of_subject_in_semester (sub_id,semester_id,user_id) values ('CO3005', 202,'1111111');
-Insert into user_of_subject_in_semester (sub_id,semester_id,user_id) values ('CO3005', 202,'2222222');
-Insert into user_of_subject_in_semester (sub_id,semester_id,user_id) values ('CO3005', 202,'3333333');
-Insert into user_of_subject_in_semester (sub_id,semester_id,user_id) values ('CO3005', 202,'4444444');
-
-Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','4444444');
-Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','3333333');
-Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','1111111');
-Insert into user_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','2222222');
-Insert into teacher_of_class (sub_id,semester_id,class_id,user_id) values ('CO3005', 202,'L01','113');
-
-Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','1111111');
-Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','2222222');
-Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','3333333');
-Insert into student_attend_class (sub_id,semester_id,class_id,date,user_id) values ('CO3005',202,'L01','2021-04-30','4444444');
-
--- Insert into student_in_group (sub_id,semester_id,class_id,gname,user_id) values ('CO3005', 202,'L01','Alias','1111111');
--- Insert into student_in_group (sub_id,semester_id,class_id,gname,user_id) values ('CO3005',202,'L01','Alias','2222222');
--- Insert into student_in_group (sub_id,semester_id,class_id,gname,user_id) values ('CO3005',202,'L01','Alias','3333333');
--- Insert into student_in_group (sub_id,semester_id,class_id,gname,user_id) values ('CO3005',202,'L01','Lancelot','4444444');
-
-Insert into student_do_exam_code (sub_id,semester_id,exam_name,exam_code_id,user_id,score,student_answer) values ('CO3005',202,'BTL','004','4444444',0.0,'CCAAACDACD');
-Insert into student_do_exam_code (sub_id,semester_id,exam_name,exam_code_id,user_id,score,student_answer) values ('CO3005',202,'BTL','004','1111111',1.0,'BCAAACDACD');
-
-Insert into student_do_quiz (sub_id,semester_id,quiz_name,user_id,student_answer,time,score) values ('CO3005',202,'Quiz1: Lexical','2222222','AA',20,10.0);
-Insert into student_do_quiz (sub_id,semester_id,quiz_name,user_id,student_answer,time,score) values ('CO3005',202,'Quiz1: Lexical','3333333','BA',10,5.0);
-
 
 drop table if exists time_attendance;
 create table time_attendance
@@ -428,22 +316,85 @@ create table time_attendance
 	sub_id varchar(55),
     semester_id int,
     class_id varchar(55),
-    start_time datetime,
-    end_time datetime,
+    start_time varchar(55),
+    end_time varchar(55),
+    day varchar(55),
     lati double,
     longti double,
-    primary key (start_time, end_time,sub_id, semester_id, class_id),
+    primary key (day, sub_id, semester_id, class_id),
 	foreign key (sub_id, semester_id, class_id)
 		references class(sub_id, semester_id, class_id)
         on delete cascade
         on update cascade
 );
 
+drop table if exists student_time_attendance;
+create table student_time_attendance
+(
+	sub_id varchar(55),
+    semester_id int,
+    class_id varchar(55),
+    took date,
+    user_id varchar(55),
+    primary key (took,sub_id, semester_id, class_id),
+	foreign key (sub_id, semester_id, class_id)
+		references class(sub_id, semester_id, class_id)
+        on delete cascade
+        on update cascade
+);
 
 -- create procedure 
+DROP PROCEDURE IF EXISTS listsubject_GV $$
+DELIMITER $$
+CREATE PROCEDURE listsubject_GV (
+	 user_id varchar(55), semester_id int
+)
+BEGIN
+select A.sub_id, S.name as sub_name, COUNT(T.class_id) as num_class
+from user_of_subject_in_semester as A, subject as S, teacher_of_class as T
+where A.sub_id = S.id and A.user_id = T.user_id and A.sub_id = T.sub_id
+and A.semester_id = semester_id and A.user_id = user_id
+group by A.sub_id;
+END; $$
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS listsubject $$
+CREATE PROCEDURE listsubject(
+	user_id varchar(55), semester_id int
+)
+BEGIN
+	select S.name, U.class_id, S.id
+	from user_of_class as U, subject as S
+	where U.semester_id = semester_id and U.user_id = user_id and U.sub_id = S.id;
+END $$
+
+DROP PROCEDURE IF EXISTS countAttendance;
+DELIMITER $$
+CREATE PROCEDURE countAttendance(count_sub_id varchar(55),count_semester_id int,count_class_id varchar(55),count_user_id varchar(55))
+BEGIN
+	SELECT COUNT(took) as count FROM student_time_attendance WHERE count_sub_id = sub_id and count_semester_id = semester_id and count_class_id = class_id and count_user_id = user_id;
+END $$
+
+DROP PROCEDURE IF EXISTS countabsent;
+DELIMITER $$
+CREATE PROCEDURE `countabsent`(took_sub_id varchar(55), took_semester_id int, took_class_id varchar(55))
+BEGIN
+	SELECT COUNT(start_time) as counttime FROM time_attendance WHERE sub_id = took_sub_id and semester_id = took_semester_id and class_id =took_class_id; 
+END $$
 
 -- nguyen phi thong
-DELIMITER $$
+
+DROP PROCEDURE IF EXISTS setTimeAttendance $$
+CREATE PROCEDURE setTimeAttendance(
+	semester_id int, sub_id varchar(55), class_id varchar(55), start_time varchar(55), end_time varchar(55), day varchar(55),
+    lati long, longti long
+)
+BEGIN
+	INSERT INTO time_attendance(sub_id, semester_id, class_id, start_time, end_time, day, lati, longti)
+    VALUES(sub_id, semester_id, class_id, start_time, end_time, day, lati, longti);
+END; $$
+
 
 DROP PROCEDURE IF EXISTS getNoMax $$
 CREATE PROCEDURE getNomax(
@@ -556,10 +507,14 @@ CREATE PROCEDURE listmemberingroup(
 	)
 BEGIN
 	select u.id, u.name
-    from user_of_class ul, user u, student_in_group s
-    where s.sub_id=sub_id AND s.semester_id=semester_id AND s.class_id=class_id
-    AND s.gname = gname AND s.user_id = ul.user_id AND ul.user_id=u.id;
+    from student_in_group s, user_of_class ul, user u
+    where s.user_id = ul.user_id and s.sub_id = ul.sub_id and
+    s.semester_id = ul.semester_id and s.class_id = ul.class_id
+    and s.sub_id=sub_id AND s.semester_id=semester_id AND s.class_id=class_id
+    and ul.user_id = u.id AND s.gname = gname ;
 END;$$
+
+-- call listmemberingroup('CO2013',202,'L01','Abc');$$
 
 
 
@@ -869,54 +824,6 @@ DELIMITER ;
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'B', true, "Ice");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'C', true, "Kick");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'D', true, "Rock");
-
-
-
-
-DROP PROCEDURE IF EXISTS modify_question_of_quiz_proc;
-DELIMITER $$
-CREATE PROCEDURE modify_question_of_quiz_proc
-(
-	sub_id varchar(55), semester_id int, quiz_name varchar(255), question_id int, content text
-)
-BEGIN
-	update question q
-    set q.content = content
-    where q.sub_id = sub_id
-		and q.semester_id = semester_id
-        and q.quiz_name = quiz_name
-        and q.question_id = question_id;
-    
-    select LAST_INSERT_ID() as last_id;
-END $$
-DELIMITER ;
-
-call modify_question_of_quiz_proc("CO3005", 202, "Quy", 2, "Modify question");
-
-
-
-DROP PROCEDURE IF EXISTS modify_answer_of_question_proc;
-DELIMITER $$
-CREATE PROCEDURE modify_answer_of_question_proc
-(
-	sub_id varchar(55), semester_id int, quiz_name varchar(255), question_id int, answer_id varchar(1), right_answer tinyint(1), content text
-)
-BEGIN
-	update answer a
-    set a.content = content,
-		a.right_answer = right_answer
-    where a.sub_id = sub_id
-		and a.semester_id = semester_id
-        and a.quiz_name = quiz_name
-        and a.question_id = question_id
-        and a.answer_id = answer_id;
-    
-    select LAST_INSERT_ID() as last_id;
-END $$
-DELIMITER ;
-
-call modify_answer_of_question_proc("CO3005", 202, "Quy", 2, "B", false, "Modify answer");
-
 
 
 DROP PROCEDURE IF EXISTS get_all_answer_of_a_question_proc;

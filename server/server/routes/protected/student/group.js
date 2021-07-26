@@ -73,7 +73,7 @@ router.post('/creategroup',(req, res) => {
 });
 
 router.delete('/deletegroup',(req, res) => {
-    if(!req.privilege.creategroup) return res.sendStatus(401);
+    if(!req.privilege.deletegroup) return res.sendStatus(401);
     
     var sub_id = req.query.sub_id;
     var semester_id = req.query.semester_id;
@@ -109,7 +109,7 @@ router.get('/viewmem',(req, res) => {
 });
 
 router.get('/findgroup',(req, res) => {
-    if(!req.privilege.viewmem) return res.sendStatus(401);
+    if(!req.privilege.findGroup) return res.sendStatus(401);
     
     var user_id = req.query.user_id;
     var sub_id = req.query.sub_id;
@@ -126,7 +126,7 @@ router.get('/findgroup',(req, res) => {
 });
 
 router.get('/getnomax',(req, res) => {
-    if(!req.privilege.viewmem) return res.sendStatus(401);
+    if(!req.privilege.getnomax) return res.sendStatus(401);
     
     var sub_id = req.query.sub_id;
     var semester_id = req.query.semester_id;

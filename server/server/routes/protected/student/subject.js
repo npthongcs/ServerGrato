@@ -33,15 +33,17 @@ router.post('/joinsubject', (req,res) => {
 
 });
 
-router.get('/:semester_id', (req,res) => {
+router.get('/listsubject', (req,res) => {
     if(!req.privilege.listsubject) return res.sendStatus(401);
 
-    var semester_id = req.params.semester_id;
-    var user_id = req.body.user_id;
+    console.log("listSubject (SV)");
 
-    connection.query('call listsubject(?,?)',[semester_id,user_id],(err,results,fields) => {
+    var semester_id = req.query.semester_id;
+    var user_id = req.query.user_id;
+
+    connection.query('call listsubject(?,?)',[user_id, semester_id],(err,results,fields) => {
         if(err) return res.status(500).send(err);
-        res.send(results);
+        res.send(results[0]);
     })
 
 });
