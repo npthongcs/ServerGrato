@@ -12,6 +12,11 @@ router.get('/listclass', (req, res)=>{
 
     console.log(req.query)
 
+    console.log('call list class');
+    console.log(semester_id);
+    console.log(sub_id);
+    console.log(user_id);
+
     connection.query(
         'call listClass_GV(?,?,?)',
         [sub_id, semester_id, user_id],
@@ -85,15 +90,60 @@ router.post('/timeAttendance', (req, res)=>{
     var class_id = req.body.class_id;
     var start_time = req.body.start_time;
     var end_time = req.body.end_time;
+    var day = req.body.day;
     var lati = req.body.lati;
     var longti = req.body.longti;
 
     connection.query(
-        'call setTimeAttendance(?,?,?,?,?,?,?)',
-        [semester_id, sub_id, class_id, start_time, end_time, lati, longti],
+        'call setTimeAttendance(?,?,?,?,?,?,?,?)',
+        [semester_id, sub_id, class_id, start_time, end_time,day, lati, longti],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
             res.send(results[0]);
+        }
+    )
+});
+
+
+router.get('/countAttendance', (req, res)=>{
+    console.log("count anttendance");
+    if(!req.privilege.showAttend) return res.sendStatus(401);
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var class_id = req.query.class_id;
+    var user_id = req.query.user_id;
+
+    console.log(sub_id);
+    console.log(semester_id);
+    console.log(class_id);
+    console.log(user_id);
+
+    connection.query(
+        'call countAttendance(?,?,?,?)',
+        [sub_id, semester_id, class_id,user_id],
+        (err, results, fields)=>{
+            if(err) return res.status(500).send(err);
+            console.log(results[0])
+            res.send(results[0][0]);
+        }
+    )
+});
+
+router.get('/countabsent', (req, res)=>{
+    console.log("countabsent");
+    if(!req.privilege.countabsent) return res.sendStatus(401);
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var class_id = req.query.class_id;
+    console.log(class_id);
+    console.log(req.user)
+    connection.query(
+        'call countabsent(?,?,?)',
+        [sub_id, semester_id, class_id],
+        (err, results, fields)=>{
+            if(err) return res.status(500).send(err);
+            console.log(results)
+            res.send(results[0][0]);
         }
     )
 });

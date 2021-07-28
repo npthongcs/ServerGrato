@@ -17,7 +17,6 @@ function getPrivilege(user) {
         outgroup: false,
         creategroup: false,
         viewmem: false,
-        listsubject: false,
         viewResultQuiz: false,
         submitquiz: false,
         listsubject_GV: false,
@@ -33,7 +32,9 @@ function getPrivilege(user) {
         attend: false,
         addattend: false,
         showQuiz: false,
-        deletegroup: false
+        deletegroup: false,
+        timeAttendance: false,
+        listsubject: false
     };
 
     if(user.job_type == 'GV')
@@ -55,7 +56,9 @@ function getPrivilege(user) {
         privilege.viewListStudentDoExamCode = true;
         privilege.deleteStudentDoExamCode = true;
         privilege.getAllQuestionAndAnswers = true;
-
+        privilege.timeAttendance = true;
+        privilege.showAttend = true;
+        privilege.countabsent = true;
     }
     if(user.job_type == 'SV')
     {
@@ -69,7 +72,6 @@ function getPrivilege(user) {
         privilege.outgroup = true;
         privilege.creategroup = true;
         privilege.viewmem = true;
-        privilege.listsubject = true;
         privilege.viewResultQuiz = true;
         privilege.submitquiz = true;
         privilege.findGroup = true;
@@ -82,6 +84,7 @@ function getPrivilege(user) {
         privilege.addattend = true;
         privilege.showQuiz = true;
         privilege.deletegroup = true;
+        privilege.listsubject = true;
     }
 
 
