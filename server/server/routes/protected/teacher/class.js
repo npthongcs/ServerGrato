@@ -8,6 +8,9 @@ router.get('/listclass', (req, res)=>{
     var semester_id = req.query.semester_id;
     var sub_id = req.query.sub_id;
     var user_id = req.query.user_id;
+    console.log("user_id: " + user_id)
+
+    console.log(req.query)
 
     console.log('call list class');
     console.log(semester_id);
@@ -19,6 +22,7 @@ router.get('/listclass', (req, res)=>{
         [sub_id, semester_id, user_id],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
+            console.log(results[0]);
             res.send(results[0])
         }
     )

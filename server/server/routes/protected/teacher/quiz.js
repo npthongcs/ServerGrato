@@ -44,6 +44,48 @@ router.post('/add_quiz', (req, res)=>{
     )
 });
 
+//Long do
+router.post('/add_quiz_of_class_proc', (req, res)=>{
+    // console.log("in add quiz: ", req.user)
+    if(!req.privilege.addQuiz) return res.sendStatus(401);
+
+    var sub_id = req.body.sub_id;
+    var semester_id = req.body.semester_id;
+    var quiz_name = req.body.quiz_name;
+    var class_id = req.body.class_id;
+
+    connection.query(
+        'call add_quiz_of_class_proc(?,?,?,?)',
+        [sub_id, semester_id, quiz_name, class_id],
+        (err, results, fields)=>{
+            if(err) return res.sendStatus(500);
+            res.sendStatus(200);
+        }
+    )
+});
+
+
+// Long do
+router.get('/teacher_get_all_class_of_quiz', (req, res)=>{
+    if(!req.privilege.getAllQuizOfClass) return res.sendStatus(401);
+
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var quiz_name = req.query.quiz_name;
+    var id_user = req.user.id;
+    console.log(id_user);
+
+    connection.query(
+        'call teacher_get_all_class_of_quiz_proc(?,?,?,?)',
+        [sub_id, semester_id, quiz_name, id_user],
+        (err, results, fields)=>{
+            if(err) return res.status(500).send(err);
+            res.send(results[0]);
+        }
+    )
+});
+
+
 // Long do
 router.get('/get_all_quiz_of_class', (req, res)=>{
     if(!req.privilege.getAllQuizOfClass) return res.sendStatus(401);

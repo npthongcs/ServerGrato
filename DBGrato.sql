@@ -450,6 +450,7 @@ BEGIN
     INSERT INTO user_of_class
     VALUES(sub_id,semester_id,class_id,user_id);
 END; $$
+-- call createClass_GV('CO3005', 202, 'L01', 'H2-202', '7h', '9h', 'buiducvu');
 
 DROP PROCEDURE IF EXISTS listClass_GV $$
 CREATE PROCEDURE listClass_GV(
@@ -460,6 +461,7 @@ BEGIN
     from teacher_of_class t
     where t.user_id = user_id AND t.sub_id = sub_id AND t.semester_id = semester_id;
 END; $$
+-- call listClass_GV('CO3005', 202, 'buiducvu');
 
 
 DROP PROCEDURE IF EXISTS countstudent $$
@@ -716,23 +718,6 @@ DELIMITER ;
 
 -- call teacher_get_all_quiz_of_class_proc('CO3005', 202, 'L01');
 
-DROP PROCEDURE IF EXISTS get_all_class_of_quiz_proc;
-DELIMITER $$
-CREATE PROCEDURE get_all_class_of_quiz_proc
-(
-	sub_id varchar(55), semester_id int, quiz_name varchar(255)
-)
-BEGIN
-	select *
-	from quiz_of_class qoc
-    where qoc.sub_id = sub_id
-		and qoc.semester_id = semester_id
-        and qoc.quiz_name = quiz_name;
-END $$
-DELIMITER ;
-
--- call get_all_class_of_quiz_proc('CO3005', 202, 'Quiz1: Lexical');
-
 
 DROP PROCEDURE IF EXISTS add_quiz_of_class_proc;
 DELIMITER $$
@@ -749,6 +734,41 @@ END $$
 DELIMITER ;
 
 -- call add_quiz_of_class_proc("CO3005", 202, "Quiz4", 'L01');
+
+
+-- tìm ra tất cả class gv này đang dạy (teacher of class)
+-- kiểm tra (class, quiz) có trong quiz_of_class chưa (có thì 1, chưa thì 0) -> thêm field added
+
+DROP PROCEDURE IF EXISTS teacher_get_all_class_of_quiz_proc;
+DELIMITER $$
+CREATE PROCEDURE teacher_get_all_class_of_quiz_proc
+(
+	sub_id varchar(55), 
+    semester_id int, 
+    quiz_name varchar(255), 
+    id_user varchar(55)
+)
+BEGIN
+	select
+		cot.class_id,
+		if(qoc.quiz_name is null, 0, 1) as added
+	from (	select *
+			from teacher_of_class toc
+			where toc.sub_id = sub_id
+				and toc.semester_id = semester_id
+				and toc.user_id = id_user) as cot -- class of teacher
+        join quiz q -- mượn bảng quiz để lấy tất cả bài quiz
+			on q.quiz_name = quiz_name
+		left join quiz_of_class qoc
+			on qoc.class_id = cot.class_id
+			and qoc.quiz_name = q.quiz_name
+            and qoc.semester_id = cot.semester_id
+            and qoc.sub_id = cot.sub_id;
+
+END $$
+DELIMITER ;
+
+-- call teacher_get_all_class_of_quiz_proc('CO3005', 202, 'Quiz15', '901');
 
 
 DROP PROCEDURE IF EXISTS delete_quiz_from_class_proc;
@@ -823,6 +843,50 @@ DELIMITER ;
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'B', true, "Ice");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'C', true, "Kick");
 -- call add_answer_to_question_proc("CO3005", 202, "Quiz4", 1, 'D', true, "Rock");
+
+DROP PROCEDURE IF EXISTS modify_question_of_quiz_proc;
+DELIMITER $$
+CREATE PROCEDURE modify_question_of_quiz_proc
+(
+	sub_id varchar(55), semester_id int, quiz_name varchar(255), question_id int, content text
+)
+BEGIN
+	update question q
+    set q.content = content
+    where q.sub_id = sub_id
+		and q.semester_id = semester_id
+        and q.quiz_name = quiz_name
+        and q.question_id = question_id;
+
+    select LAST_INSERT_ID() as last_id;
+END $$
+DELIMITER ;
+
+-- call modify_question_of_quiz_proc("CO3005", 202, "Quy", 2, "Modify question"); 
+
+
+
+DROP PROCEDURE IF EXISTS modify_answer_of_question_proc;
+DELIMITER $$
+CREATE PROCEDURE modify_answer_of_question_proc
+(
+	sub_id varchar(55), semester_id int, quiz_name varchar(255), question_id int, answer_id varchar(1), right_answer tinyint(1), content text
+)
+BEGIN
+	update answer a
+    set a.content = content,
+		a.right_answer = right_answer
+    where a.sub_id = sub_id
+		and a.semester_id = semester_id
+        and a.quiz_name = quiz_name
+        and a.question_id = question_id
+        and a.answer_id = answer_id;
+
+    select LAST_INSERT_ID() as last_id;
+END $$
+DELIMITER ;
+
+-- call modify_answer_of_question_proc("CO3005", 202, "Quy", 2, "B", false, "Modify answer");
 
 
 DROP PROCEDURE IF EXISTS get_all_answer_of_a_question_proc;
