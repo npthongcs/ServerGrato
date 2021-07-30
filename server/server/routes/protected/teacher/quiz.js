@@ -87,6 +87,27 @@ router.get('/teacher_get_all_class_of_quiz', (req, res)=>{
 
 
 // Long do
+router.delete('/delete_quiz_from_class', (req, res)=>{
+    if(!req.privilege.deleteQuiz) return res.sendStatus(401);
+
+    var sub_id = req.query.sub_id;
+    var semester_id = req.query.semester_id;
+    var quiz_name = req.query.quiz_name;
+    var class_id = req.query.class_id;
+
+
+    connection.query(
+        'call delete_quiz_from_class_proc(?,?,?,?)',
+        [sub_id, semester_id, quiz_name, class_id],
+        (err, results, fields)=>{
+            if(err) return res.status(500);
+            res.sendStatus(200);
+        }
+    )
+});
+
+
+// Long do
 router.get('/get_all_quiz_of_class', (req, res)=>{
     if(!req.privilege.getAllQuizOfClass) return res.sendStatus(401);
 
