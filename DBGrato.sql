@@ -316,12 +316,11 @@ create table time_attendance
 	sub_id varchar(55),
     semester_id int,
     class_id varchar(55),
-    start_time varchar(55),
-    end_time varchar(55),
-    day varchar(55),
+    start_time datetime,
+    end_time datetime,
     lati double,
     longti double,
-    primary key (day, sub_id, semester_id, class_id),
+    primary key (start_time,end_time,sub_id, semester_id, class_id),
 	foreign key (sub_id, semester_id, class_id)
 		references class(sub_id, semester_id, class_id)
         on delete cascade
@@ -387,12 +386,12 @@ END $$
 
 DROP PROCEDURE IF EXISTS setTimeAttendance $$
 CREATE PROCEDURE setTimeAttendance(
-	semester_id int, sub_id varchar(55), class_id varchar(55), start_time varchar(55), end_time varchar(55), day varchar(55),
+	semester_id int, sub_id varchar(55), class_id varchar(55), start_time datetime, end_time datetime,
     lati long, longti long
 )
 BEGIN
-	INSERT INTO time_attendance(sub_id, semester_id, class_id, start_time, end_time, day, lati, longti)
-    VALUES(sub_id, semester_id, class_id, start_time, end_time, day, lati, longti);
+	INSERT INTO time_attendance(sub_id, semester_id, class_id, start_time, end_time, lati, longti)
+    VALUES(sub_id, semester_id, class_id, start_time, end_time,lati, longti);
 END; $$
 
 

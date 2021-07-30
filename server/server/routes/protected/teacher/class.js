@@ -86,13 +86,12 @@ router.post('/timeAttendance', (req, res)=>{
     var class_id = req.body.class_id;
     var start_time = req.body.start_time;
     var end_time = req.body.end_time;
-    var day = req.body.day;
     var lati = req.body.lati;
     var longti = req.body.longti;
 
     connection.query(
-        'call setTimeAttendance(?,?,?,?,?,?,?,?)',
-        [semester_id, sub_id, class_id, start_time, end_time,day, lati, longti],
+        'call setTimeAttendance(?,?,?,?,?,?,?)',
+        [semester_id, sub_id, class_id, start_time, end_time, lati, longti],
         (err, results, fields)=>{
             if(err) return res.status(500).send(err);
             res.send(results[0]);
