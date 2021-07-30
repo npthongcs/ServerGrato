@@ -719,23 +719,6 @@ DELIMITER ;
 
 -- call teacher_get_all_quiz_of_class_proc('CO3005', 202, 'L01');
 
-DROP PROCEDURE IF EXISTS get_all_class_of_quiz_proc;
-DELIMITER $$
-CREATE PROCEDURE get_all_class_of_quiz_proc
-(
-	sub_id varchar(55), semester_id int, quiz_name varchar(255)
-)
-BEGIN
-	select *
-	from quiz_of_class qoc
-    where qoc.sub_id = sub_id
-		and qoc.semester_id = semester_id
-        and qoc.quiz_name = quiz_name;
-END $$
-DELIMITER ;
-
--- call get_all_class_of_quiz_proc('CO3005', 202, 'Quiz1: Lexical');
-
 
 DROP PROCEDURE IF EXISTS add_quiz_of_class_proc;
 DELIMITER $$
@@ -752,6 +735,41 @@ END $$
 DELIMITER ;
 
 -- call add_quiz_of_class_proc("CO3005", 202, "Quiz4", 'L01');
+
+
+-- tìm ra tất cả class gv này đang dạy (teacher of class)
+-- kiểm tra (class, quiz) có trong quiz_of_class chưa (có thì 1, chưa thì 0) -> thêm field added
+
+DROP PROCEDURE IF EXISTS teacher_get_all_class_of_quiz_proc;
+DELIMITER $$
+CREATE PROCEDURE teacher_get_all_class_of_quiz_proc
+(
+	sub_id varchar(55), 
+    semester_id int, 
+    quiz_name varchar(255), 
+    id_user varchar(55)
+)
+BEGIN
+	select
+		cot.class_id,
+		if(qoc.quiz_name is null, 0, 1) as added
+	from (	select *
+			from teacher_of_class toc
+			where toc.sub_id = sub_id
+				and toc.semester_id = semester_id
+				and toc.user_id = id_user) as cot -- class of teacher
+        join quiz q -- mượn bảng quiz để lấy tất cả bài quiz
+			on q.quiz_name = quiz_name
+		left join quiz_of_class qoc
+			on qoc.class_id = cot.class_id
+			and qoc.quiz_name = q.quiz_name
+            and qoc.semester_id = cot.semester_id
+            and qoc.sub_id = cot.sub_id;
+
+END $$
+DELIMITER ;
+
+-- call teacher_get_all_class_of_quiz_proc('CO3005', 202, 'Quiz15', '901');
 
 
 DROP PROCEDURE IF EXISTS delete_quiz_from_class_proc;
