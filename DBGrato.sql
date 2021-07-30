@@ -787,7 +787,7 @@ BEGIN
 END $$
 DELIMITER ;
 
--- call delete_quiz_from_class_proc("CO3005", 202, "Quiz4", 'L01');
+-- call delete_quiz_from_class_proc("CO3005", 202, "Quiz15", 'L02');
 
 
 -- Question of quiz
