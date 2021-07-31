@@ -668,13 +668,13 @@ DROP PROCEDURE IF EXISTS modify_quiz_proc;
 DELIMITER $$
 CREATE PROCEDURE modify_quiz_proc
 (
-	sub_id varchar(55), semester_id int, old_quiz_name varchar(255), new_quiz_name varchar(255), max_time int, no_question int, deadline datetime
+	sub_id varchar(55), semester_id int, old_quiz_name varchar(255), new_quiz_name varchar(255), max_time int, deadline datetime
 )
 BEGIN
 	update quiz q
     set q.quiz_name = new_quiz_name,
         q.max_time = max_time,
-        q.no_question = no_question,
+--         q.no_question = no_question,
         q.deadline = deadline
 	where q.sub_id = sub_id 
 		and q.semester_id = semester_id

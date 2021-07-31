@@ -9,8 +9,8 @@ router.get('/listQuiz', (req, res)=>{
     var sub_id = req.query.sub_id;
     var semester_id = req.query.semester_id;
 
-    console.log("in quiz: ", req.headers)
-    console.log("in quiz--: ", req.query)
+    // console.log("in quiz: ", req.headers)
+    // console.log("in quiz--: ", req.query)
     connection.query(
         'call get_all_quiz_of_a_semester_proc(?,?)',
         [sub_id, semester_id],
@@ -304,33 +304,34 @@ router.get('/getQuiz', (req, res)=>{
 
 
 //Long do
-router.put('/modifyQuiz', (req, res)=>{
+router.post('/modifyQuiz', (req, res)=>{
     if(!req.privilege.listQuiz) return res.sendStatus(401);
     console.log("modify")
 
     var sub_id = req.body.sub_id;
     var semester_id = req.body.semester_id;
-    var quiz_name = req.body.quiz_name;
+    var old_quiz_name = req.body.old_quiz_name;
+    var new_quiz_name = req.body.new_quiz_name;
     var max_time = req.body.max_time;
-    var no_question = req.body.no_question;
+    // var no_question = req.body.no_question; ko cho sửa no_question -> ảnh hưởng các question đang có
     var deadline = req.body.deadline;
 
 
     console.log("in quiz: ", req.headers)
     console.log("in quiz--: ", req.body)
-    console.log("body: ", quiz_name, no_question);
     connection.query(
         'call modify_quiz_proc(?,?,?,?,?,?)',
-        [sub_id, semester_id, quiz_name, max_time, no_question, deadline],
+        [sub_id, semester_id, old_quiz_name, new_quiz_name, max_time, deadline],
         (err, results, fields)=>{
             console.log(results);
             if(err) return res.status(500).send(err);
-            res.send({
-                'quiz_name': quiz_name,
-                'max_time': max_time,
-                'no_question': no_question,
-                'deadline': deadline,
-            });
+            res.sendStatus(200);
+            // res.send({
+            //     'quiz_name': new_quiz_name,
+            //     'max_time': max_time,
+            //     'no_question': no_question,
+            //     'deadline': deadline,
+            // });
         }
     )
 });
